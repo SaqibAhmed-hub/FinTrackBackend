@@ -45,4 +45,20 @@ interface TransactionRepository : JpaRepository<Transaction, UUID> {
     AND t.deleted = false
 """)
     fun sumByType(userId: UUID, type: TransactionType): BigDecimal?
+
+    @Query("""
+    SELECT SUM(t.amount)
+    FROM Transaction t
+    WHERE t.user.id = :userId
+    AND t.category.id = :categoryId
+    AND t.type = 'EXPENSE'
+    AND t.deleted = false
+    AND t.createdAt BETWEEN :start AND :end
+""")
+    fun sumExpenseByCategoryAndMonth(
+        userId: UUID,
+        categoryId: UUID,
+        start: LocalDateTime,
+        end: LocalDateTime
+    ): BigDecimal?
 }

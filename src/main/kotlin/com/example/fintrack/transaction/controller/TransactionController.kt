@@ -34,12 +34,6 @@ class TransactionController(
         return ResponseEntity.ok(transactionService.createTransaction(request))
     }
 
-//    @GetMapping
-//    fun getMyTransactions(): ResponseEntity<List<TransactionResponse>> {
-//
-//        return ResponseEntity.ok(transactionService.getMyTransactions())
-//    }
-
     @GetMapping
     fun getTransactions(
         @RequestParam(required = false) startDate: LocalDate?,
