@@ -25,8 +25,10 @@ class SecurityConfig(
             .authorizeHttpRequests {
                 it.requestMatchers(
                     "/api/v1/auth/**",
+                    "/v3/api-docs",
                     "/v3/api-docs/**",
-                    "/swagger-ui/**"
+                    "/swagger-ui/**",
+                    "/swagger-ui.html"
                 ).permitAll()
                 it.anyRequest().authenticated()
             }.exceptionHandling {
@@ -42,4 +44,6 @@ class SecurityConfig(
 
         return http.build()
     }
+
+
 }

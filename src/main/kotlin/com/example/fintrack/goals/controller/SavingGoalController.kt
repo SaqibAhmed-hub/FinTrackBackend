@@ -5,6 +5,8 @@ import com.example.fintrack.goals.dto.CreateSavingsGoalRequest
 import com.example.fintrack.goals.dto.SavingsGoalResponse
 import com.example.fintrack.goals.dto.UpdateSavingsGoalRequest
 import com.example.fintrack.goals.service.SavingsGoalService
+import io.swagger.v3.oas.annotations.security.SecurityRequirement
+import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
@@ -16,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import java.util.UUID
 
+@SecurityRequirement(name = "Bearer Authentication")
+@Tag(name = "Saving Goals")
 @RestController
 @RequestMapping("/api/v1/savings-goals")
 class SavingsGoalController(

@@ -1,4 +1,4 @@
-package com.example.fintrack.goals.entity
+package com.example.fintrack.debt.entity
 
 import com.example.fintrack.user.entity.User
 import jakarta.persistence.Column
@@ -17,27 +17,30 @@ import java.time.LocalDateTime
 import java.util.UUID
 
 @Entity
-@Table(name = "savings_goals")
-class SavingsGoal(
+@Table(name = "debts")
+class Debt(
 
     @Id
     @GeneratedValue
     val id: UUID? = null,
 
     @Column(nullable = false)
-    var name: String,
+    val name: String,
 
     @Column(nullable = false)
-    var targetAmount: BigDecimal,
+    val totalAmount: BigDecimal,
 
     @Column(nullable = false)
-    var savedAmount: BigDecimal = BigDecimal.ZERO,
+    var remainingAmount: BigDecimal,
 
     @Column(nullable = false)
-    var targetDate: LocalDate,
+    val interestRate: Double = 0.0,
 
     @Column(nullable = false)
-    var completed: Boolean = false,
+    val dueDate: LocalDate,
+
+    @Column(nullable = false)
+    var closed: Boolean = false,
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)

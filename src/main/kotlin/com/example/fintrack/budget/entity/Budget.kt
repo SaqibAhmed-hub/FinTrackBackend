@@ -11,7 +11,10 @@ import jakarta.persistence.JoinColumn
 import jakarta.persistence.ManyToOne
 import jakarta.persistence.Table
 import jakarta.persistence.UniqueConstraint
+import org.hibernate.annotations.CreationTimestamp
+import org.hibernate.annotations.UpdateTimestamp
 import java.math.BigDecimal
+import java.time.LocalDateTime
 import java.util.UUID
 
 @Entity
@@ -30,10 +33,10 @@ class Budget(
     val id: UUID? = null,
 
     @Column(nullable = false)
-    val year: Int,
+    var year: Int,
 
     @Column(nullable = false)
-    val month: Int,
+    var month: Int,
 
     @Column(nullable = false)
     var amount: BigDecimal,
@@ -44,5 +47,14 @@ class Budget(
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
-    val user: User
+    val user: User,
+
+    @Column(nullable = false)
+    var isDeleted: Boolean = false,
+
+    @CreationTimestamp
+    var createdAt: LocalDateTime? = null,
+
+    @UpdateTimestamp
+    var updatedAt: LocalDateTime? = null
 )

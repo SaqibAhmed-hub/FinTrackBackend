@@ -1,6 +1,5 @@
-package com.example.fintrack.goals.entity
+package com.example.fintrack.debt.entity
 
-import com.example.fintrack.user.entity.User
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.FetchType
@@ -12,36 +11,26 @@ import jakarta.persistence.Table
 import org.hibernate.annotations.CreationTimestamp
 import org.hibernate.annotations.UpdateTimestamp
 import java.math.BigDecimal
-import java.time.LocalDate
 import java.time.LocalDateTime
 import java.util.UUID
 
 @Entity
-@Table(name = "savings_goals")
-class SavingsGoal(
+@Table(name = "debt_payments")
+class DebtPayment(
 
     @Id
     @GeneratedValue
     val id: UUID? = null,
 
     @Column(nullable = false)
-    var name: String,
+    val amount: BigDecimal,
 
     @Column(nullable = false)
-    var targetAmount: BigDecimal,
-
-    @Column(nullable = false)
-    var savedAmount: BigDecimal = BigDecimal.ZERO,
-
-    @Column(nullable = false)
-    var targetDate: LocalDate,
-
-    @Column(nullable = false)
-    var completed: Boolean = false,
+    val paymentDate: LocalDateTime = LocalDateTime.now(),
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
-    val user: User,
+    @JoinColumn(name = "debt_id", nullable = false)
+    val debt: Debt,
 
     @Column(nullable = false)
     var isDeleted: Boolean = false,

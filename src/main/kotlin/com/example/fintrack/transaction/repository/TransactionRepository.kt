@@ -23,6 +23,11 @@ interface TransactionRepository : JpaRepository<Transaction, UUID> {
         pageable: Pageable
     ): Page<Transaction>
 
+    fun findByUserIdAndUpdatedAtAfter(
+        userId: UUID,
+        updatedAt: LocalDateTime
+    ): List<Transaction>
+
     @Query("""
     SELECT SUM(t.amount) FROM Transaction t
     WHERE t.user.id = :userId

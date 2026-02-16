@@ -23,6 +23,7 @@ class JwtAuthenticationFilter(
     ) {
 
         try {
+
             val bearerToken = request.getHeader("Authorization")
 
             if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
@@ -54,5 +55,13 @@ class JwtAuthenticationFilter(
 
 
         filterChain.doFilter(request, response)
+    }
+
+
+    override fun shouldNotFilter(request: HttpServletRequest): Boolean {
+        val path = request.servletPath
+        return path.startsWith("/v3/api-docs") ||
+                path.startsWith("/swagger-ui") ||
+                path.startsWith("/swagger-ui.html")
     }
 }

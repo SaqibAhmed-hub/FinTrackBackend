@@ -3,6 +3,8 @@ package com.example.fintrack.categories.controller
 import com.example.fintrack.categories.dto.CreateCategoryRequest
 import com.example.fintrack.categories.dto.UpdateCategoryRequest
 import com.example.fintrack.categories.service.CategoryService
+import io.swagger.v3.oas.annotations.security.SecurityRequirement
+import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -13,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import java.util.UUID
 
+@SecurityRequirement(name = "Bearer Authentication")
+@Tag(name = "Category")
 @RestController
 @RequestMapping("/api/v1/categories")
 class CategoryController(

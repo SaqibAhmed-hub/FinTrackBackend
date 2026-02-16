@@ -86,7 +86,7 @@ class SavingsGoalService(
         val user = userService.getCurrentUser()
 
         return savingsGoalRepository
-            .findAllByUserId(user.id!!)
+            .findAllByUserIdAndIsDeletedFalse(user.id!!)
             .map { mapToResponse(it) }
     }
 
@@ -104,7 +104,7 @@ class SavingsGoalService(
 
         val user = userService.getCurrentUser()
 
-        val goals = savingsGoalRepository.findAllByUserId(user.id!!)
+        val goals = savingsGoalRepository.findAllByUserIdAndIsDeletedFalse(user.id!!)
 
         val totalTarget = goals.sumOf { it.targetAmount }
         val totalSaved = goals.sumOf { it.savedAmount }

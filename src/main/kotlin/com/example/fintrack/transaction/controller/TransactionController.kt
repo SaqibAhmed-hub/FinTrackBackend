@@ -4,6 +4,8 @@ import com.example.fintrack.transaction.dto.CreateTransactionRequest
 import com.example.fintrack.transaction.dto.TransactionResponse
 import com.example.fintrack.transaction.dto.UpdateTransactionRequest
 import com.example.fintrack.transaction.service.TransactionService
+import io.swagger.v3.oas.annotations.security.SecurityRequirement
+import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.http.ResponseEntity
@@ -20,6 +22,8 @@ import java.math.BigDecimal
 import java.time.LocalDate
 import java.util.UUID
 
+@SecurityRequirement(name = "Bearer Authentication")
+@Tag(name = "Transaction")
 @RestController
 @RequestMapping("/api/v1/transactions")
 class TransactionController(

@@ -3,6 +3,8 @@ package com.example.fintrack.transaction.entity
 import com.example.fintrack.categories.entity.Category
 import com.example.fintrack.user.entity.User
 import jakarta.persistence.*
+import org.hibernate.annotations.CreationTimestamp
+import org.hibernate.annotations.UpdateTimestamp
 import java.math.BigDecimal
 import java.time.LocalDateTime
 import java.util.*
@@ -35,6 +37,9 @@ class Transaction(
 
     @Column(nullable = false)
     val createdAt: LocalDateTime = LocalDateTime.now(),
+
+    @UpdateTimestamp
+    var updatedAt: LocalDateTime? = null,
 
     @Column(nullable = false)
     var deleted: Boolean = false

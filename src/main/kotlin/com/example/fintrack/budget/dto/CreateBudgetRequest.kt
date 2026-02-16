@@ -9,3 +9,10 @@ data class CreateBudgetRequest(
     val month: Int,
     val amount: BigDecimal
 )
+
+data class UpdateBudgetRequest(
+    val categoryId: UUID,
+    val amount: BigDecimal,
+    val month: Int,
+    val year: Int
+)
