@@ -20,12 +20,16 @@ class Transaction(
     @Column(nullable = false)
     var amount: BigDecimal,
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 255)
     var description: String,
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     var type: TransactionType,
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    var paymentMethod: PaymentMethod = PaymentMethod.CASH,
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id", nullable = false)
@@ -48,4 +52,13 @@ class Transaction(
 enum class TransactionType {
     INCOME,
     EXPENSE
+}
+
+enum class PaymentMethod {
+    CASH,
+    CREDIT_CARD,
+    DEBIT_CARD,
+    BANK_TRANSFER,
+    UPI,
+    OTHER
 }

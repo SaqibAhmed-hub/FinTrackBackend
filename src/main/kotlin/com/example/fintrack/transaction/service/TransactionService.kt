@@ -4,18 +4,18 @@ import com.example.fintrack.categories.repository.CategoryRepository
 import com.example.fintrack.transaction.dto.CreateTransactionRequest
 import com.example.fintrack.transaction.dto.TransactionResponse
 import com.example.fintrack.transaction.dto.UpdateTransactionRequest
+import com.example.fintrack.transaction.entity.PaymentMethod
 import com.example.fintrack.transaction.entity.Transaction
 import com.example.fintrack.transaction.entity.TransactionType
 import com.example.fintrack.transaction.repository.TransactionRepository
 import com.example.fintrack.user.service.CustomUserDetailsService
 import org.springframework.data.domain.Page
-import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import java.math.BigDecimal
 import java.time.LocalDate
 import java.time.LocalDateTime
-import java.util.UUID
+import java.util.*
 
 @Service
 class TransactionService(
@@ -148,7 +148,16 @@ class TransactionService(
     }
 
 
-
+    fun getMonthlyPaymentMethod(paymentMethod: PaymentMethod,year: Int,month: Int): Map<String, String> {
+        val user = userService.getCurrentUser()
+        val start = LocalDate.of(year, month, 1).atStartOfDay()
+        val end = start.plusMonths(1).minusSeconds(1)
+        val payment =  transactionRepository.getMonthlySummaryByPaymentMethod(user.id!!,paymentMethod,start,end) ?: BigDecimal.ZERO
+        return mapOf(
+            "paymentMethod" to paymentMethod.name,
+            "amount" to payment.toString()
+        )
+    }
 
 
     private fun Transaction.toResponse() = TransactionResponse(
@@ -156,6 +165,7 @@ class TransactionService(
         amount = amount,
         description = description,
         type = type,
+        paymentMethod = paymentMethod,
         categoryName = category.name,
         createdAt = createdAt
     )

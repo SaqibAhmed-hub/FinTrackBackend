@@ -3,6 +3,8 @@ package com.example.fintrack.transaction.controller
 import com.example.fintrack.transaction.dto.CreateTransactionRequest
 import com.example.fintrack.transaction.dto.TransactionResponse
 import com.example.fintrack.transaction.dto.UpdateTransactionRequest
+import com.example.fintrack.transaction.entity.PaymentMethod
+import com.example.fintrack.transaction.entity.Transaction
 import com.example.fintrack.transaction.service.TransactionService
 import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import io.swagger.v3.oas.annotations.tags.Tag
@@ -77,6 +79,15 @@ class TransactionController(
     fun dashboard(
     ): ResponseEntity<Map<String, BigDecimal>>{
         return ResponseEntity.ok(transactionService.getDashboardTotals())
+    }
+
+    @GetMapping("/monthly-payment-summary")
+    fun paymentMethodSummary(
+        @RequestParam paymentMethod: PaymentMethod,
+        @RequestParam year: Int,
+        @RequestParam month: Int
+    ) : ResponseEntity<Map<String, String>>{
+        return ResponseEntity.ok(transactionService.getMonthlyPaymentMethod(paymentMethod,year,month))
     }
 
 }
