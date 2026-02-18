@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ExceptionHandler
+import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestControllerAdvice
 
 @RestControllerAdvice
@@ -26,4 +27,21 @@ class GlobalExceptionHandler {
             .status(HttpStatus.BAD_REQUEST)
             .body(errors)
     }
+
+    @ExceptionHandler(EmailAlreadyExistsException::class)
+    fun handleEmailExists(ex: EmailAlreadyExistsException): ResponseEntity<String> {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.message)
+    }
+
+    @ExceptionHandler(InvalidCredentialsException::class)
+    fun handleEmailExists(ex: InvalidCredentialsException): ResponseEntity<String> {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ex.message)
+    }
+
 }
+
+@ResponseStatus(HttpStatus.CONFLICT)
+class EmailAlreadyExistsException(message: String) : RuntimeException(message)
+
+@ResponseStatus(HttpStatus.UNAUTHORIZED)
+class InvalidCredentialsException(message: String) : RuntimeException(message)

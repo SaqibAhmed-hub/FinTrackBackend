@@ -28,4 +28,6 @@ interface BudgetRepository : JpaRepository<Budget, UUID> {
 
     fun findByUserIdAndUpdatedAtAfter(userId: UUID?, lastSync: LocalDateTime?): List<Budget>
 
+
+
 }

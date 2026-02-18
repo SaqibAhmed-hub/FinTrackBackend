@@ -6,6 +6,7 @@ import com.example.fintrack.budget.dto.UpdateBudgetRequest
 import com.example.fintrack.budget.entity.Budget
 import com.example.fintrack.budget.repository.BudgetRepository
 import com.example.fintrack.categories.repository.CategoryRepository
+import com.example.fintrack.common.exception.EmailAlreadyExistsException
 import com.example.fintrack.transaction.repository.TransactionRepository
 import com.example.fintrack.user.service.CustomUserDetailsService
 import org.springframework.stereotype.Service
@@ -34,7 +35,7 @@ class BudgetService(
                 user.id!!, request.categoryId, request.year, request.month
             ) != null
         ) {
-            throw RuntimeException("Budget already exists for this month")
+            throw EmailAlreadyExistsException("Budget already exists for this month")
         }
 
         val budget = Budget(

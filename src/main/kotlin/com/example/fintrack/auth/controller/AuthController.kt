@@ -4,8 +4,10 @@ package com.example.fintrack.auth.controller
 import com.example.fintrack.auth.dto.LoginRequest
 import com.example.fintrack.auth.dto.RegisterRequest
 import com.example.fintrack.auth.service.AuthService
+import io.jsonwebtoken.Header
 import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
+import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
@@ -23,9 +25,7 @@ class AuthController(
 
         authService.register(request)
 
-        return ResponseEntity.ok(
-            mapOf("message" to "User registered successfully")
-        )
+        return ResponseEntity.status(HttpStatus.CREATED).body( mapOf("message" to "User registered successfully"))
     }
 
     @PostMapping("/login")

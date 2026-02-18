@@ -7,6 +7,7 @@ import com.example.fintrack.budget.service.BudgetService
 import com.example.fintrack.user.dto.CustomUserDetails
 import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import io.swagger.v3.oas.annotations.tags.Tag
+import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.*
@@ -25,7 +26,7 @@ class BudgetController(
         @RequestBody request: CreateBudgetRequest
     ): ResponseEntity<BudgetResponse> {
 
-        return ResponseEntity.ok(budgetService.createBudget(request))
+        return ResponseEntity.status(HttpStatus.CREATED).body(budgetService.createBudget(request))
     }
 
     @GetMapping

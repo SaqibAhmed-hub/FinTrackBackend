@@ -1,6 +1,7 @@
 package com.example.fintrack.user.service
 
 import com.example.fintrack.user.dto.CustomUserDetails
+import com.example.fintrack.user.dto.UserResponse
 import com.example.fintrack.user.entity.User
 import com.example.fintrack.user.repository.UserRepository
 import org.springframework.security.core.context.SecurityContextHolder
@@ -49,5 +50,33 @@ class CustomUserDetailsService(
 
         return userRepository.findById(principal.id)
             .orElseThrow { RuntimeException("User not found") }
+    }
+
+    fun deleteUser(userId: UUID, currentUser: CustomUserDetails) {
+
+        // Allow user to delete only their own account
+        if (userId != currentUser.id) {
+            throw IllegalArgumentException("You are not allowed to delete this user")
+        }
+
+        val user = userRepository.findById(userId)
+            .orElseThrow { IllegalArgumentException("User not found") }
+
+        // Soft delete (recommended)
+        user.isDeleted = true
+        userRepository.save(user)
+
+    }
+
+    fun getProfileUser(user: CustomUserDetails): UserResponse {
+
+        val profileUser = userRepository.findById(user.id)
+            .orElseThrow { UsernameNotFoundException("User not found") }
+
+        return UserResponse(
+            id = profileUser.id!!,
+            email = profileUser.email,
+            fullName = profileUser.name
+        )
     }
 }

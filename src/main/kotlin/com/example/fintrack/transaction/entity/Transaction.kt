@@ -3,7 +3,6 @@ package com.example.fintrack.transaction.entity
 import com.example.fintrack.categories.entity.Category
 import com.example.fintrack.user.entity.User
 import jakarta.persistence.*
-import org.hibernate.annotations.CreationTimestamp
 import org.hibernate.annotations.UpdateTimestamp
 import java.math.BigDecimal
 import java.time.LocalDateTime

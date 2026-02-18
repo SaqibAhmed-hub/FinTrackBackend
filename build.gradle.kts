@@ -44,10 +44,6 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 
 	annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
-	testImplementation("org.springframework.boot:spring-boot-starter-security-test")
-	testImplementation("org.springframework.boot:spring-boot-starter-webmvc-test")
-	testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
-	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 
@@ -57,8 +53,20 @@ dependencies {
 
 	implementation("org.postgresql:postgresql")
 
-
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0")
+
+	// Testing
+	testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
+	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+	testImplementation("org.springframework.boot:spring-boot-starter-test")
+	testImplementation("org.springframework.security:spring-security-test")
+
+	// Test containers used for Docker
+//	testImplementation("org.testcontainers:junit-jupiter")
+//	testImplementation("org.testcontainers:postgresql")
+
+	// PostgreSQL Driver
+	testImplementation("org.postgresql:postgresql")
 }
 
 dependencyManagement {

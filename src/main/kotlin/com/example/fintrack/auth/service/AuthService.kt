@@ -5,11 +5,15 @@ package com.example.fintrack.auth.service
 
 import com.example.fintrack.auth.dto.LoginRequest
 import com.example.fintrack.auth.dto.RegisterRequest
+import com.example.fintrack.common.exception.EmailAlreadyExistsException
+import com.example.fintrack.common.exception.InvalidCredentialsException
 import com.example.fintrack.security.JwtTokenProvider
 import com.example.fintrack.user.entity.User
 import com.example.fintrack.user.repository.UserRepository
+import org.springframework.http.HttpStatus
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
+import org.springframework.web.server.ResponseStatusException
 import java.time.LocalDateTime
 
 @Service
@@ -23,7 +27,7 @@ class AuthService(
 
         val existingUser = userRepository.findByEmailAndIsDeletedFalse(request.email)
         if (existingUser != null) {
-            throw RuntimeException("Email already registered")
+            throw EmailAlreadyExistsException("Email already registered")
         }
 
         val user = User(
@@ -41,10 +45,10 @@ class AuthService(
     fun login(request: LoginRequest): Map<String, Any> {
 
         val user = userRepository.findByEmailAndIsDeletedFalse(request.email)
-            ?: throw RuntimeException("Invalid credentials")
+            ?: throw InvalidCredentialsException("Invalid credentials")
 
         if (!passwordEncoder.matches(request.password, user.password_hash)) {
-            throw RuntimeException("Invalid credentials")
+            throw InvalidCredentialsException("Invalid credentials")
         }
 
         val token = jwtTokenProvider.generateToken(user.id!!)
